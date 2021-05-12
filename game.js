@@ -4,8 +4,20 @@ var buttonColours = ["red", "blue", "green", "yellow"];
 var started = false;
 var level = 0;
 
+//Start with any key
 $(document).keydown(function() {
   if(!started) {
+  $("#level-title").text("Level " + level);
+  nextSequence();
+  started = true;
+}
+});
+
+//Start with a button
+$(".btn-start").on("click", function() {
+  if(!started) {
+  var startId = this.id;
+  animateStart();
   $("#level-title").text("Level " + level);
   nextSequence();
   started = true;
@@ -53,6 +65,14 @@ function animatePress(currentColour) {
   }, 100);
   };
 
+  // animation for start button
+  function animateStart() {
+    $(".btn-start").addClass("pressed");
+    setTimeout (function() {
+      $(".btn-start").removeClass("pressed");
+    }, 100);
+    };
+
   // check answer Function
 
   function checkAnswer(currentLevel) {
@@ -67,7 +87,7 @@ function animatePress(currentColour) {
     else {
       playWrongSound();
       animateWrong();
-      $("h1").text("Game Over, Press Any Key to Restart");
+      $("h1").text("Game Over, Press a Button or Any Key to Restart");
       startOver();
       }
   };
